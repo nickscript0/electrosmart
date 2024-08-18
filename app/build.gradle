@@ -6,7 +6,7 @@ android {
     defaultConfig {
         applicationId 'fr.inria.es.electrosmart'
 
-        minSdkVersion 30
+        minSdkVersion 33
         // Kitkat 20, L 21, M 23, N 24, O 26, P 28, Q/Android 10: 29, R/Android 11: 30,
         // S/Android 12: 31
         targetSdkVersion 34

@@ -39,6 +39,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
@@ -61,11 +62,13 @@ import androidx.appcompat.widget.AppCompatTextView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.constraintlayout.widget.Group;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.widget.ImageViewCompat;
 import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.transition.TransitionManager;
+
 import android.Manifest;
 
 import java.util.List;
@@ -132,6 +135,7 @@ public class HomeFragment extends MainActivityFragment {
     private TextView mTextViewAdvice;
     // The image next to the TextView advice
     private AppCompatImageView mImageAdvice;
+    private static final int REQUEST_CODE_BLUETOOTH_SCAN = 1;
 
     private final BroadcastReceiver mLiveTimelineUpdatedBroadcastReceiver = new BroadcastReceiver() {
         @Override
@@ -731,16 +735,20 @@ public class HomeFragment extends MainActivityFragment {
     }
 
     private void requestNewPermissions() {
-//        if (ContextCompat.checkSelfPermission(this,
-//                Manifest.permission.BLUETOOTH_SCAN
-//        ) != PackageManager.PERMISSION_GRANTED
-//        ) {
-//            ActivityCompat.requestPermissions(
-//                    this,
-//                    arrayOf(Manifest.permission.BLUETOOTH_SCAN),
-//                    REQUEST_CODE_BLUETOOTH_SCAN
-//            )
-//        }
+
+        // Define a constant for the request code
+
+
+        if (ContextCompat.checkSelfPermission(this.mContext,
+                Manifest.permission.BLUETOOTH_SCAN
+        ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                    this.mActivity,
+                    new String[]{Manifest.permission.BLUETOOTH_SCAN},
+                    REQUEST_CODE_BLUETOOTH_SCAN
+            );
+        }
     }
 
     private void hideExposureScale() {
