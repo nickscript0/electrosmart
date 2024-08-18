@@ -746,7 +746,28 @@ public class HomeFragment extends MainActivityFragment {
             ActivityCompat.requestPermissions(
                     this.mActivity,
                     new String[]{Manifest.permission.BLUETOOTH_SCAN},
-                    REQUEST_CODE_BLUETOOTH_SCAN
+                    1
+            );
+        }
+
+        if (ContextCompat.checkSelfPermission(this.mContext,
+                Manifest.permission.BLUETOOTH_CONNECT
+        ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                    this.mActivity,
+                    new String[]{Manifest.permission.BLUETOOTH_CONNECT},
+                    2
+            );
+        }
+
+        if (ContextCompat.checkSelfPermission(this.mContext, Manifest.permission.USE_EXACT_ALARM)
+                != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                    this.mActivity,
+                    new String[]{Manifest.permission.USE_EXACT_ALARM},
+                    3
             );
         }
     }
