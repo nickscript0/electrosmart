@@ -66,6 +66,7 @@ import androidx.core.widget.ImageViewCompat;
 import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.transition.TransitionManager;
+import android.Manifest;
 
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
@@ -723,7 +724,23 @@ public class HomeFragment extends MainActivityFragment {
         mTextViewAdvice = mLayoutAdvice.findViewById(R.id.text_view_advice_description);
         mImageAdvice = mLayoutAdvice.findViewById(R.id.image_advice);
 
+        // NDEBUG Request modern Android Permissions
+        this.requestNewPermissions();
+
         return mFragmentHomeView;
+    }
+
+    private void requestNewPermissions() {
+//        if (ContextCompat.checkSelfPermission(this,
+//                Manifest.permission.BLUETOOTH_SCAN
+//        ) != PackageManager.PERMISSION_GRANTED
+//        ) {
+//            ActivityCompat.requestPermissions(
+//                    this,
+//                    arrayOf(Manifest.permission.BLUETOOTH_SCAN),
+//                    REQUEST_CODE_BLUETOOTH_SCAN
+//            )
+//        }
     }
 
     private void hideExposureScale() {

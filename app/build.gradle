@@ -72,7 +72,8 @@ android {
         }
     }
     compileOptions {
-        targetCompatibility = 1.8
+        targetCompatibility = JavaVersion.VERSION_16
+        sourceCompatibility = JavaVersion.VERSION_16
     }
     namespace 'fr.inria.es.electrosmart'
 }
