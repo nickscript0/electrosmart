@@ -1,15 +1,15 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 31
+    compileSdkVersion 34
 
     defaultConfig {
         applicationId 'fr.inria.es.electrosmart'
 
-        minSdkVersion 16 // JELLY_BEAN
+        minSdkVersion 30
         // Kitkat 20, L 21, M 23, N 24, O 26, P 28, Q/Android 10: 29, R/Android 11: 30,
         // S/Android 12: 31
-        targetSdkVersion 30
+        targetSdkVersion 34
 
 
         vectorDrawables.useSupportLibrary = true
@@ -92,7 +92,8 @@ dependencies {
     implementation 'androidx.annotation:annotation:1.3.0'
 
     // dependency used for in-app reviews
-    implementation 'com.google.android.play:core:1.10.3'
+    // NDEBUG: <html>[Prevents app release in Google Play Console] com.google.android.play:core version 1.10.3 has been reported as problematic by its author and will block publishing of your app to Play Console. Note: Update your Play Core Maven dependency to an Android 14 compatible version!<br/>Your current Play Core library is incompatible with targetSdkVersion 34 (Android 14), which introduces a backwards-incompatible change to broadcast receivers to improve user security. As a reminder, from August 31, Google Play requires all new app releases to target Android 14. Update to the latest Play Core library version dependency to avoid app crashes: https://developer.android.com/guide/playcore#playcore-migration
+    //    implementation 'com.google.android.play:core:1.10.3'
 
 }
 

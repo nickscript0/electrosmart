@@ -69,11 +69,11 @@ import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import com.google.android.play.core.review.ReviewInfo;
-import com.google.android.play.core.review.ReviewManager;
-import com.google.android.play.core.review.ReviewManagerFactory;
-import com.google.android.play.core.tasks.OnCompleteListener;
-import com.google.android.play.core.tasks.Task;
+//import com.google.android.play.core.review.ReviewInfo;
+//import com.google.android.play.core.review.ReviewManager;
+//import com.google.android.play.core.review.ReviewManagerFactory;
+//import com.google.android.play.core.tasks.OnCompleteListener;
+//import com.google.android.play.core.tasks.Task;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -2084,36 +2084,36 @@ public class Tools {
         - We trigger at most a single in-app review per day
         - We do not trigger more than (<=) MAX_NB_TIME_IN_APP_REVIEW_COMPLETED in-app reviews
          */
-        if ((daysSinceAppInstallation >= Const.MIN_DAYS_SINCE_APP_INSTALLATION) &&
-                ((nbUniqueDaysMainActivityResumes >= Const.MIN_DAYS_MAIN_ACTIVITY_RESUMED) ||
-                        (nbUniqueHoursMainActivityResumed >= Const.MIN_HOURS_MAIN_ACTIVITY_RESUMED)) &&
-                !DateUtils.isToday(timestampLastInAppReview) &&
-                nbTimesInAppReviews <= Const.MAX_NB_TIME_IN_APP_REVIEW_COMPLETED) {
-            // used for in-app reviews
-            Log.d(TAG, "askInAppReview: in-app review start the code");
-            final ReviewManager manager = ReviewManagerFactory.create(context);
-            Task<ReviewInfo> request = manager.requestReviewFlow();
-            request.addOnCompleteListener(task -> {
-                if (task.isSuccessful()) {
-                    Log.d(TAG, "askInAppReview.request.onComplete: in-app review task is successful");
-                    // We can get the ReviewInfo object
-                    ReviewInfo reviewInfo = task.getResult();
-                    manager.launchReviewFlow(activity, reviewInfo);
-                    Task<Void> flow = manager.launchReviewFlow(activity, reviewInfo);
-                    flow.addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            Log.d(TAG, "askInAppReview.flow.onComplete: in-app review flow is complete");
-                            // The flow has finished. The API does not indicate whether the user
-                            // reviewed or not, or even whether the review dialog was shown. Thus, no
-                            // matter the result, we continue our app flow.
-                            editSharedPreferences.putInt(Const.NB_TIMES_IN_APP_REVIEW_TRIGGERED, nbTimesInAppReviews + 1).apply();
-                            editSharedPreferences.putLong(Const.TIMESTAMP_LAST_TIME_IN_APP_REVIEW_TRIGGERED, now).apply();
-                        }
-                    });
-                }
-            });
-        }
+//        if ((daysSinceAppInstallation >= Const.MIN_DAYS_SINCE_APP_INSTALLATION) &&
+//                ((nbUniqueDaysMainActivityResumes >= Const.MIN_DAYS_MAIN_ACTIVITY_RESUMED) ||
+//                        (nbUniqueHoursMainActivityResumed >= Const.MIN_HOURS_MAIN_ACTIVITY_RESUMED)) &&
+//                !DateUtils.isToday(timestampLastInAppReview) &&
+//                nbTimesInAppReviews <= Const.MAX_NB_TIME_IN_APP_REVIEW_COMPLETED) {
+//            // used for in-app reviews
+//            Log.d(TAG, "askInAppReview: in-app review start the code");
+//            final ReviewManager manager = ReviewManagerFactory.create(context);
+//            Task<ReviewInfo> request = manager.requestReviewFlow();
+//            request.addOnCompleteListener(task -> {
+//                if (task.isSuccessful()) {
+//                    Log.d(TAG, "askInAppReview.request.onComplete: in-app review task is successful");
+//                    // We can get the ReviewInfo object
+//                    ReviewInfo reviewInfo = task.getResult();
+//                    manager.launchReviewFlow(activity, reviewInfo);
+//                    Task<Void> flow = manager.launchReviewFlow(activity, reviewInfo);
+//                    flow.addOnCompleteListener(new OnCompleteListener<Void>() {
+//                        @Override
+//                        public void onComplete(@NonNull Task<Void> task) {
+//                            Log.d(TAG, "askInAppReview.flow.onComplete: in-app review flow is complete");
+//                            // The flow has finished. The API does not indicate whether the user
+//                            // reviewed or not, or even whether the review dialog was shown. Thus, no
+//                            // matter the result, we continue our app flow.
+//                            editSharedPreferences.putInt(Const.NB_TIMES_IN_APP_REVIEW_TRIGGERED, nbTimesInAppReviews + 1).apply();
+//                            editSharedPreferences.putLong(Const.TIMESTAMP_LAST_TIME_IN_APP_REVIEW_TRIGGERED, now).apply();
+//                        }
+//                    });
+//                }
+//            });
+//        }
     }
 
     /**
