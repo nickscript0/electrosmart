@@ -761,12 +761,12 @@ public class HomeFragment extends MainActivityFragment {
             );
         }
 
-        if (ContextCompat.checkSelfPermission(this.mContext, Manifest.permission.USE_EXACT_ALARM)
+        if (ContextCompat.checkSelfPermission(this.mContext, Manifest.permission.SCHEDULE_EXACT_ALARM)
                 != PackageManager.PERMISSION_GRANTED
         ) {
             ActivityCompat.requestPermissions(
                     this.mActivity,
-                    new String[]{Manifest.permission.USE_EXACT_ALARM},
+                    new String[]{Manifest.permission.SCHEDULE_EXACT_ALARM},
                     3
             );
         }
