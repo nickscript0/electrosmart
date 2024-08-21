@@ -249,6 +249,13 @@ public class OnBoardingActivity extends AppCompatActivity {
                 mButtonAuthorize.setOnClickListener(v -> {
                     Log.d(TAG, "onClick: Authorize clicked");
                     shouldShowLocationFragment = true;
+                    /**
+                     * NDEBUG I'm adding the new Android 14 permission requests here
+                     * Ideally it could be its on OnBoardingFragmentStrategy, but as a quick hack this should be
+                     * a good place as I think it is waiting for an onClick event from the user, so it will wait for the
+                     * permission popups.
+                     */
+                    OnBoardingActivity.requestNewPermissions(OnBoardingActivity.this);
                     Tools.grantLocationToApp(OnBoardingActivity.this, OnBoardingActivity.this, true);
                 });
 
@@ -258,13 +265,6 @@ public class OnBoardingActivity extends AppCompatActivity {
                             getString(R.string.onboarding_location_permission_explanation_foreground_api31));
                 }
 
-                /**
-                 * NDEBUG I'm adding the new Android 14 permission requests here
-                 * Ideally it could be its on OnBoardingFragmentStrategy, but as a quick hack this should be
-                 * a good place as I think it is waiting for an onClick event from the user, so it will wait for the
-                 * permission popups.
-                 */
-                OnBoardingActivity.requestNewPermissions(OnBoardingActivity.this);
 
                 return view;
             }

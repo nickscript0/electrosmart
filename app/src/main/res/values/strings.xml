@@ -610,10 +610,10 @@
         to measure your exposure and alert you in case of important changes in your environment.\n\nWe
         optimized the app so that it has no impact on your battery.</string>
     <string name="onboarding_location_permission_explanation_foreground_api30">We need to ask you
-        <b>two</b> authorizations before running the app.\n\n First, <b>we need to access your location</b>
+        <b>four</b> authorizations before running the app.\n\n First, <b>we need the ability to set Alarms (to measure exposure in the background every 20min), find and connect to nearby devices (to measure bluetooth exposure), and to access your location</b>
         to measure your exposure while you use the app.</string>
     <string name="onboarding_location_permission_explanation_foreground_api31">We need to ask you
-        &lt;b>two&lt;/b> authorizations before running the app.&lt;br/>&lt;br/> First, &lt;b>we need to access your precise location&lt;/b>
+        <b>four</b> authorizations before running the app.\n\n First, <b>we need the ability to set Alarms (to measure exposure in the background every 20min), find and connect to nearby devices (to measure bluetooth exposure), and to access your location</b>
         to measure your exposure while you use the app.</string>
     <string name="onboarding_location_permission_explanation_background_api30">Last, <b>we need to
         access your location in background</b> if you want to have daily statistics and alerts in
