@@ -33,11 +33,17 @@
 
 package fr.inria.es.electrosmart.activities;
 
+import android.Manifest;
+import android.app.Activity;
+import android.app.AlarmManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -53,7 +59,12 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatCheckBox;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import fr.inria.es.electrosmart.Const;
 import fr.inria.es.electrosmart.MainApplication;
@@ -95,6 +106,52 @@ public class OnBoardingActivity extends AppCompatActivity {
     private boolean isOnboardingDone = false;
     // Variables to retrieve the on-boarding data
     private UserProfile mUserProfile;
+
+    /**
+     * NDEBUG: Added to request new Android 14 permissions
+     */
+    static private void requestNewPermissions(Activity activity) {
+        Log.i(TAG, "NDEBUG start of requestNewPermissions()");
+
+        // List of permissions to request
+        String[] permissions = {
+                Manifest.permission.BLUETOOTH_SCAN,
+                Manifest.permission.BLUETOOTH_CONNECT,
+//                Manifest.permission.SCHEDULE_EXACT_ALARM
+        };
+
+        // List to hold permissions that are not granted
+        List<String> permissionsToRequest = new ArrayList<>();
+
+        // Check each permission and add it to the list if not granted
+        for (String permission : permissions) {
+            if (ContextCompat.checkSelfPermission(activity, permission)
+                    != PackageManager.PERMISSION_GRANTED) {
+                permissionsToRequest.add(permission);
+            }
+        }
+
+        // Request permissions if there are any not granted
+        Log.i(TAG, "Permissions to request: " + permissionsToRequest);
+        if (!permissionsToRequest.isEmpty()) {
+            ActivityCompat.requestPermissions(
+                    activity,
+                    permissionsToRequest.toArray(new String[0]),
+                    1 // Request code can be any integer
+            );
+        }
+
+        AlarmManager alarmManager = (AlarmManager) activity.getSystemService(Context.ALARM_SERVICE);
+        if (alarmManager != null) {
+            if (!alarmManager.canScheduleExactAlarms()) {
+                // Ask users to go to exact alarm page in system settings.
+                Intent intent = new Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM);
+                activity.startActivity(intent);
+            }
+        }
+
+        Log.i(TAG, "NDEBUG end of requestNewPermissions()");
+    }
 
     public OnBoardingActivity() {
 
@@ -201,6 +258,13 @@ public class OnBoardingActivity extends AppCompatActivity {
                             getString(R.string.onboarding_location_permission_explanation_foreground_api31));
                 }
 
+                /**
+                 * NDEBUG I'm adding the new Android 14 permission requests here
+                 * Ideally it could be its on OnBoardingFragmentStrategy, but as a quick hack this should be
+                 * a good place as I think it is waiting for an onClick event from the user, so it will wait for the
+                 * permission popups.
+                 */
+                OnBoardingActivity.requestNewPermissions(OnBoardingActivity.this);
 
                 return view;
             }
@@ -931,6 +995,7 @@ public class OnBoardingActivity extends AppCompatActivity {
                                            @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         Log.d(TAG, "in onRequestPermissionsResult()");
+        Log.i(TAG, "NDEBUG in onRequestPermissionsResult() permissions: " + Arrays.toString(permissions) + "grantResults: " + Arrays.toString(grantResults));
 
         // this method keep track of a user refusing to be asked for permissions. As we use
         // this information on subsequent permission grants, we must call this method to keep

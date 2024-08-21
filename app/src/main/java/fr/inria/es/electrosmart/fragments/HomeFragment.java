@@ -728,48 +728,7 @@ public class HomeFragment extends MainActivityFragment {
         mTextViewAdvice = mLayoutAdvice.findViewById(R.id.text_view_advice_description);
         mImageAdvice = mLayoutAdvice.findViewById(R.id.image_advice);
 
-        // NDEBUG Request modern Android Permissions
-        this.requestNewPermissions();
-
         return mFragmentHomeView;
-    }
-
-    private void requestNewPermissions() {
-
-        // Define a constant for the request code
-
-
-        if (ContextCompat.checkSelfPermission(this.mContext,
-                Manifest.permission.BLUETOOTH_SCAN
-        ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            ActivityCompat.requestPermissions(
-                    this.mActivity,
-                    new String[]{Manifest.permission.BLUETOOTH_SCAN},
-                    1
-            );
-        }
-
-        if (ContextCompat.checkSelfPermission(this.mContext,
-                Manifest.permission.BLUETOOTH_CONNECT
-        ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            ActivityCompat.requestPermissions(
-                    this.mActivity,
-                    new String[]{Manifest.permission.BLUETOOTH_CONNECT},
-                    2
-            );
-        }
-
-        if (ContextCompat.checkSelfPermission(this.mContext, Manifest.permission.SCHEDULE_EXACT_ALARM)
-                != PackageManager.PERMISSION_GRANTED
-        ) {
-            ActivityCompat.requestPermissions(
-                    this.mActivity,
-                    new String[]{Manifest.permission.SCHEDULE_EXACT_ALARM},
-                    3
-            );
-        }
     }
 
     private void hideExposureScale() {
