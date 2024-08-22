@@ -34,7 +34,9 @@
 package fr.inria.es.electrosmart.monitors;
 
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.telephony.CellIdentityCdma;
 import android.telephony.CellIdentityGsm;
@@ -62,6 +64,7 @@ import android.telephony.gsm.GsmCellLocation;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -220,11 +223,26 @@ public final class CellularMonitor {
      */
     private static int getNetworkType(TelephonyManager manager) {
         int networkType;
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
-            networkType = manager.getNetworkType();
-        } else {
+        if (ActivityCompat.checkSelfPermission(MainApplication.getContext(), Manifest.permission.READ_BASIC_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            Log.w(TAG, "READ_BASIC_PHONE_STATE not granted setting NETWORK_TYPE_UNKNOWN");
             networkType = TelephonyManager.NETWORK_TYPE_UNKNOWN;
+        } else {
+            networkType = manager.getDataNetworkType();
         }
+
+        // Upstream version, can remove this
+//        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
+//            networkType = manager.getNetworkType();
+//        } else {
+//            networkType = TelephonyManager.NETWORK_TYPE_UNKNOWN;
+//        }
         Log.d(TAG, "getNetworkType: networkType: " + networkType);
         return networkType;
     }

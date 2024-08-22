@@ -117,7 +117,7 @@ public class OnBoardingActivity extends AppCompatActivity {
         String[] permissions = {
                 Manifest.permission.BLUETOOTH_SCAN,
                 Manifest.permission.BLUETOOTH_CONNECT,
-//                Manifest.permission.SCHEDULE_EXACT_ALARM
+                Manifest.permission.READ_BASIC_PHONE_STATE
         };
 
         // List to hold permissions that are not granted
@@ -141,6 +141,7 @@ public class OnBoardingActivity extends AppCompatActivity {
             );
         }
 
+        // SCHEDULE_EXACT_ALARM is requested by guiding user to menu with startActivity intent
         AlarmManager alarmManager = (AlarmManager) activity.getSystemService(Context.ALARM_SERVICE);
         if (alarmManager != null) {
             if (!alarmManager.canScheduleExactAlarms()) {

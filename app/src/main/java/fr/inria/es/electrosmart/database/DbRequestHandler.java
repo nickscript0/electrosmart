@@ -1815,7 +1815,9 @@ public class DbRequestHandler {
         }
         String operator = getOperator(mcc, mnc);
         if (operator.isEmpty()) {
-            return MainApplication.getContext().getResources().getString(R.string.unknown_operator);
+            // NDEBUG: return the MNC / MCC instead of unknown_operator so I can manually look them up
+            // return MainApplication.getContext().getResources().getString(R.string.unknown_operator);
+            return "mnc: " + mnc + ", mcc: " + mcc;
         } else {
             return operator;
         }
